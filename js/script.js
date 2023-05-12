@@ -10,3 +10,38 @@ const guestList = document.querySelector(".guest-list");
 const guestCount = document.querySelector(".attendance");
 // alert when guest list is full (not yet visible)
 const guestFull = document.querySelector(".alert");
+
+// click 'invite' button to add entered info to a list below the button.
+addGuestButton.addEventListener("click", function () {
+  const guest = guestInput.value;
+  if (guest !== "") {
+    addToList(guest);
+    clearInput();
+    updateGuestCount();
+  }
+  //   console.log(guest);
+});
+
+// clear the guest field after the 'invite' button is clicked.
+const clearInput = function () {
+  guestInput.value = "";
+};
+
+// create and populate from guest enetered and add to list.
+const addToList = function (guest) {
+  const listItem = document.createElement("li");
+  listItem.innerText = guest;
+  guestList.append(listItem);
+};
+
+// limit number of guests to 8.
+const updateGuestCount = function () {
+  const guests = document.querySelectorAll(".guest-list li");
+  guestCount.innerText = guests.length;
+  if (guests.length >= 8) {
+    addGuestButton.classList.add("hide");
+    guestInput.classList.add("hide");
+    guestInputLabel.classList.add("hide");
+    guestFull.classList.remove("hide");
+  }
+};
