@@ -1,3 +1,7 @@
+// assign dishes button (appears after guest list is full)
+const assignButton = document.querySelector(".assign");
+// list of guests name and assigned dish
+const assignedItems = document.querySelector(".assigned-items");
 // invite button
 const addGuestButton = document.querySelector(".invite");
 // label for the invite button
@@ -45,3 +49,40 @@ const updateGuestCount = function () {
     guestFull.classList.remove("hide");
   }
 };
+
+const assignItems = function () {
+  const potluckItems = [
+    "buffalo chicken dip",
+    "brownies",
+    "veggie tray",
+    "fruit tray",
+    "hummus",
+    "cookies",
+    "pigs in a blanket",
+    "cheese board",
+    "chips and salsa",
+    "queso dip",
+    "pie",
+    "guacamole",
+    "beer",
+    "wine",
+    "soda",
+  ];
+
+  const allGuests = document.querySelectorAll(".guest-list li");
+
+  for (let guest of allGuests) {
+    let randomPotluckIndex = Math.floor(Math.random() * potluckItems.length);
+    let randomPotluckItem = potluckItems[randomPotluckIndex];
+    let listItem = document.createElement("li");
+    // Note- Use guest.innerText to actually access the name inside the li element, not the li element itself.
+    listItem.innerText = `${guest.innerText} is bringing ${randomPotluckItem}.`;
+    assignedItems.append(listItem);
+    potluckItems.splice(randomPotluckIndex, 1);
+  }
+};
+
+assignButton.addEventListener("click", function () {
+  assignItems();
+  assignButton.disabled = true;
+});
